@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Mish-Mich</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  padding:40px;
+  background:#fff8f2;
+}
+
+section{
+  background:white;
+  padding:20px;
+  margin-bottom:30px;
+  border-radius:15px;
+}
+
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+
+button{
+  padding:10px;
+  background:#ff8f00;
+  color:white;
+  border:none;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+.book-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:8px 0;
+  padding:8px;
+  border-bottom:1px solid #eee;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MAIN BOOK -->
+<section>
+<h2>📚 Книга на месеца</h2>
+
+<input id="title" placeholder="Име">
+<input id="image" placeholder="Снимка URL">
+<textarea id="desc" placeholder="Описание"></textarea>
+
+<button onclick="saveMain()">Запази</button>
+<button onclick="removeMain()">Изтрий книга на месеца</button>
+</section>
+
+<!-- QUOTE -->
+<section>
+<h2>📖 Цитат на деня</h2>
+
+<textarea id="quoteText" placeholder="Напиши цитат..."></textarea>
+
+<button onclick="saveQuote()">Запази цитат</button>
+<button onclick="removeQuote()">Изтрий цитат</button>
+</section>
+
+<!-- ADD BOOK -->
+<section>
+<h2>📖 Добави книга</h2>
+
+<input id="bookTitle" placeholder="Име">
+<input id="bookImage" placeholder="Снимка URL">
+<input id="bookMonth" placeholder="Месец">
+
+<button onclick="addBook()">Добави</button>
+</section>
+
+<!-- DELETE BOOKS -->
+<section>
+<h2>🗑️ Управление на книги</h2>
+
+<button onclick="loadBooks()">Зареди книги</button>
+<div id="booksList"></div>
+</section>
+
+<!-- POLL -->
+<section>
+<h2>🗳️ Анкета</h2>
+
+<input id="question" placeholder="Въпрос">
+<input id="opt1" placeholder="Опция 1">
+<input id="opt2" placeholder="Опция 2">
+<input id="opt3" placeholder="Опция 3">
+
+<button onclick="savePoll()">Запази анкета</button>
+<button onclick="resetPoll()">Изтрий анкета</button>
+</section>
+
+<!-- RESULTS -->
+<section>
+<h2>📊 Резултати</h2>
+<button onclick="showResults()">Покажи резултати</button>
+<p id="results"></p>
+</section>
+
+<script>
+
+/* MAIN BOOK */
+function saveMain(){
+  localStorage.setItem("mainBook", JSON.stringify({
+    title: title.value,
+    image: image.value,
+    desc: desc.value
+  }));
+  alert("Запазено");
+}
+
+function removeMain(){
+  localStorage.removeItem("mainBook");
+  alert("Изтрито");
+}
+
+/* QUOTE */
+function saveQuote(){
+  localStorage.setItem("dailyQuote", quoteText.value);
+  alert("Цитатът е запазен");
+}
+
+function removeQuote(){
+  localStorage.removeItem("dailyQuote");
+  alert("Цитатът е изтрит");
+}
+
+/* BOOKS */
+function addBook(){
+  let books = JSON.parse(localStorage.getItem("books")) || [];
+
+  books.push({
+    title: bookTitle.value,
+    image: bookImage.value,
+    month: bookMonth.value
+  });
+
+  localStorage.setItem("books", JSON.stringify(books));
+  alert("Добавено");
+}
+
+function loadBooks(){
+  const books = JSON.parse(localStorage.getItem("books")) || [];
+  const container = document.getElementById("booksList");
+
+  container.innerHTML = "";
+
+  books.forEach((book, index)=>{
+    const div = document.createElement("div");
+    div.className = "book-item";
+
+    div.innerHTML = `
+      <span>${book.title} (${book.month})</span>
+      <button onclick="deleteBook(${index})">❌</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function deleteBook(index){
+  let books = JSON.parse(localStorage.getItem("books")) || [];
+  books.splice(index,1);
+  localStorage.setItem("books", JSON.stringify(books));
+  loadBooks();
+}
+
+/* POLL */
+function savePoll(){
+  localStorage.setItem("poll", JSON.stringify({
+    question: question.value,
+    options: [opt1.value,opt2.value,opt3.value]
+  }));
+
+  localStorage.setItem("results", JSON.stringify([0,0,0]));
+  alert("Запазено");
+}
+
+function resetPoll(){
+  localStorage.removeItem("poll");
+  localStorage.removeItem("results");
+  alert("Изтрито");
+}
+
+/* RESULTS */
+function showResults(){
+  const poll = JSON.parse(localStorage.getItem("poll"));
+  const results = JSON.parse(localStorage.getItem("results")) || [];
+
+  if(!poll){
+    document.getElementById("results").innerText = "Няма анкета";
+    return;
+  }
+
+  let output = "";
+  poll.options.forEach((opt,i)=>{
+    output += `${opt}: ${results[i] || 0} гласа\n`;
+  });
+
+  document.getElementById("results").innerText = output;
+}
+
+</script>
+
+</body>
+</html>
