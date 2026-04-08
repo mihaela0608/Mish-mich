@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mihaela Bataklieva CV</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+@page { size: A4; margin: 0; }
+
+body {
+    margin: 0;
+    background: #f3f4f6;
+    font-family: 'Poppins', sans-serif;
+}
+
+.cv {
+    width: 210mm;
+    height: 297mm;
+    background: white;
+    margin: auto;
+    padding: 16mm;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.photo {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #ff4fa3;
+    background: #ddd;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.title {
+    font-size: 13px;
+    color: #ff4fa3;
+}
+
+.contact {
+    text-align: right;
+    font-size: 11px;
+}
+
+/* SUMMARY */
+.summary {
+    background: #fff0f6;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* CARD */
+.card {
+    background: #fafafa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #ff4fa3;
+}
+
+/* TITLES */
+.card h2 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+/* TEXT */
+.item {
+    margin-bottom: 8px;
+}
+
+.item-title {
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.item-sub {
+    font-size: 11px;
+    color: #555;
+}
+
+.small {
+    font-size: 10px;
+    color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<div class="cv">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="profile">
+            <div class="photo">
+                <!-- <img src="photo.jpg"> -->
+            </div>
+            <div>
+                <div class="name">Mihaela Bataklieva</div>
+                <div class="title">Junior Java Developer</div>
+            </div>
+        </div>
+
+        <div class="contact">
+            📧 mihaelabataklieva2006@gmail.com<br>
+            📞 0895386485<br>
+            📍 Bulgaria<br>
+            🔗 linkedin.com/in/mihaela-bataklieva-1635122a4<br>
+            💻 github.com/mihaela0608
+        </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+        Motivated Junior Java Developer with strong backend foundations and experience building Spring Boot applications. Passionate about clean code, RESTful APIs, and continuous learning through real-world projects.
+    </div>
+
+    <!-- GRID -->
+    <div class="grid">
+
+        <!-- LEFT -->
+        <div>
+
+            <div class="card">
+                <h2>Projects</h2>
+
+                <div class="item">
+                    <div class="item-title">TrackIt</div>
+                    <div class="item-sub">Spring Boot, MySQL – expense tracking system.</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-title">UserProgress</div>
+                    <div class="item-sub">REST API with Spring Boot & JPA.</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-title">Eventure</div>
+                    <div class="item-sub">Event platform with authentication.</div>
+                </div>
+
+            </div>
+
+            <div class="card">
+                <h2>Education</h2>
+
+                <div class="item">
+                    <div class="item-title">Technical University of Sofia</div>
+                    <div class="small">2025 - Present</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-title">SoftUni</div>
+                    <div class="small">Java Web Development</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div>
+
+            <div class="card">
+                <h2>Skills</h2>
+                <div class="item-sub">
+                    Java • Spring Boot • REST APIs • MySQL • Thymeleaf • Git • Docker • JavaScript • HTML/CSS
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Certificates</h2>
+                <div class="item-sub">
+                    SoftUni – Java / Web / Spring
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Languages</h2>
+                <div class="item-sub">
+                    Bulgarian — Native<br>
+                    English — Advanced<br>
+                    German — Intermediate
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,11 +1,334 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mish-Mich</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* BASE */
+body{
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:#fff8f2;
+  color:#5a3e2b;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 60px;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(10px);
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  z-index:1000;
+  box-sizing:border-box;
+}
+
+.logo img{
+  height:80px;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+}
+
+nav a{
+  text-decoration:none;
+  color:#5a3e2b;
+  font-weight:500;
+  position:relative;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#ff8f00;
+}
+
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:#ff8f00;
+  transition:0.3s;
+}
+
+nav a:hover::after{
+  width:100%;
+}
+
+/* INPUT SECTION */
+.input-section{
+  padding:120px 60px 20px;
+  text-align:center;
+}
+
+.input-section input{
+  padding:10px;
+  width:300px;
+  margin-right:10px;
+}
+
+.input-section button{
+  padding:10px 15px;
+  background:#ff8f00;
+  color:white;
+  border:none;
+  cursor:pointer;
+  border-radius:5px;
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+.hero-overlay{
+  width:100%;
+  height:100%;
+  background:linear-gradient(to right, rgba(255,248,242,0.9), rgba(255,140,0,0.2));
+  display:flex;
+  align-items:center;
+  padding:0 80px;
+}
+
+.hero-content{
+  max-width:600px;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:70px;
+  margin:0;
+  animation:fadeUp 1s ease forwards;
+}
+
+.hero p{
+  font-size:20px;
+  line-height:1.6;
+  animation:fadeUp 1.3s ease forwards;
+}
+
+.btn{
+  margin-top:20px;
+  display:inline-block;
+  padding:12px 30px;
+  background:#ff8f00;
+  color:white;
+  border-radius:25px;
+  text-decoration:none;
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  background:#ff9800;
+}
+
+/* SECTIONS */
+section{
+  padding:120px 60px;
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s;
+}
+
+section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+h2{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+}
+
+/* TEXT */
+.text{
+  max-width:900px;
+  margin:auto;
+  text-align:center;
+  line-height:1.8;
+  font-size:18px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  margin-top:40px;
+}
+
+/* CARD */
+.card{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transition:0.4s;
+  text-align:center;
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.03);
+}
+
+/* FOOTER */
+footer{
+  background:#ffcc80;
+  padding:50px;
+  text-align:center;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+</style>
 </head>
+
 <body>
-    
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+  </div>
+
+  <div class="nav-links">
+    <a href="home.html">Начало</a>
+    <a href="about.html">За нас</a>
+    <a href="#books">Книжки</a>
+    <a href="#join">Включи се</a>
+    <a href="#events">Събития</a>
+  </div>
+</nav>
+
+
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1>Добре дошли в Миш-Мич!</h1>
+      
+      <a href="#join" class="btn" style="background:#ffb74d; margin-left:10px;">Присъедини се</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>Какво е Mish-Mich?</h2>
+  <div class="text">
+    Mish-Mich е уютно пространство, където хората се срещат чрез книгите.  
+    Това е място за разговори, идеи и истински човешки връзки.
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <h2>Какво ще откриеш</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>📖 Книги</h3>
+      <p>Обсъждаме внимателно подбрани книги и теми.</p>
+    </div>
+
+    <div class="card">
+      <h3>💬 Разговори</h3>
+      <p>Свободни дискусии и обмен на идеи.</p>
+    </div>
+
+    <div class="card">
+      <h3>☕ Уют</h3>
+      <p>Спокойна атмосфера за споделяне.</p>
+    </div>
+
+    <div class="card">
+      <h3>✨ Вдъхновение</h3>
+      <p>Моменти, които остават.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community">
+  <h2>Общност</h2>
+  <div class="text">
+    Mish-Mich е място за хора, които ценят разговорите, емоциите и споделеното време.
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <h2>Стани част от Mish-Mich</h2>
+  <div class="text">
+    Ако търсиш място, където да се чувстваш добре и да срещнеш нови хора — това е твоето място.
+  </div>
+
+  <div style="text-align:center; margin-top:30px;">
+    <a href="#" class="btn">Свържи се с нас</a>
+  </div>
+</section>
+
+<footer>
+  ✉️ Свържи се с нас
+</footer>
+
+<script>
+
+/* CHANGE HERO BACKGROUND */
+function changeHeroBg(){
+  const input = document.getElementById("imageInput").value;
+  const hero = document.getElementById("hero");
+
+  if(input){
+    hero.style.background = `url('${input}') center/cover no-repeat`;
+  }
+}
+
+/* SCROLL ANIMATION */
+const sections = document.querySelectorAll("section");
+
+window.addEventListener("scroll", () => {
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add("show");
+    }
+  });
+});
+
+</script>
+
 </body>
 </html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>За нас - Mish-Mich</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* BASE */
+body{
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:#fff8f2;
+  color:#5a3e2b;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 60px;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(10px);
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  z-index:1000;
+  box-sizing:border-box;
+}
+
+.logo img{
+  height:80px;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+}
+
+nav a{
+  text-decoration:none;
+  color:#5a3e2b;
+  font-weight:500;
+  position:relative;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#ff8f00;
+}
+
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:#ff8f00;
+  transition:0.3s;
+}
+
+nav a:hover::after{
+  width:100%;
+}
+
+/* HERO WITH BACKGROUND TEXT */
+.hero{
+  margin-top:100px;
+  height:60vh;
+  position:relative;
+  background:url('https://images.unsplash.com/photo-1512820790803-83ca734da794') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(255,248,242,0.88);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:64px;
+  text-align:center;
+}
+
+/* SECTIONS */
+section{
+  padding:100px 60px;
+}
+
+h2{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:40px;
+}
+
+.text{
+  max-width:900px;
+  margin:auto;
+  text-align:center;
+  line-height:1.8;
+  font-size:18px;
+}
+
+/* FUN BLOCK */
+.fun-box{
+  max-width:800px;
+  margin:40px auto;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  text-align:center;
+  font-size:18px;
+}
+
+/* FOOTER */
+footer{
+  background:#ffcc80;
+  padding:40px;
+  text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+  </div>
+
+  <div class="nav-links">
+    <a href="home.html">Начало</a>
+    <a href="about.html">За нас</a>
+    <a href="#books">Книжки</a>
+    <a href="#join">Включи се</a>
+    <a href="#events">Събития</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-overlay">
+    <h1>За Mish-Mich</h1>
+  </div>
+</div>
+
+<!-- STORY -->
+<section>
+  <h2>Как започна всичко?</h2>
+  <div class="text">
+    Имаше една идея… после още една… после някой каза „ами ако просто се събираме да говорим за книги?“  
+    И така Mish-Mich се случи.
+
+    <br><br>
+
+    Не беше планирано. Не беше перфектно. Но беше достатъчно истинско, за да стане място, което хората да започнат да наричат „своето“.
+  </div>
+</section>
+
+<!-- FUN -->
+<section>
+  <h2>Какво всъщност е Mish-Mich?</h2>
+
+  <div class="fun-box">
+    Не е библиотека.  
+    Не е клуб по задължение.  
+    И определено не е място, където ще те изпитват върху последната глава 📖
+
+    <br><br>
+
+    Mish-Mich е:
+    <br><br>
+
+    ☕ малко кафе разговори  
+    📚 малко книги  
+    💬 много мнения (понякога различни)  
+    😄 и доста смях между тях  
+
+    <br><br>
+
+    С други думи… малко миш-маш от хора, мисли и истории.
+  </div>
+</section>
+
+<!-- VALUES FUN -->
+<section>
+  <h2>Нашите „правила“</h2>
+
+  <div class="fun-box">
+    ✔ Можеш да си закъснееш — няма наказание  
+    ✔ Можеш да не си прочел книгата — ще импровизираме  
+    ✔ Можеш да говориш прекалено много — ще те оставим 😄  
+    ✔ Можеш да мълчиш — и това е ок  
+
+    <br><br>
+
+    Единственото „задължително“:  
+    👉 да си себе си
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section>
+  <h2>Какви хора има тук?</h2>
+  <div class="text">
+    Различни. Много различни.
+
+    <br><br>
+
+    Но всички имат едно общо нещо — интерес към истории и желание да бъдат част от нещо живо, истинско и човешко.
+
+    <br><br>
+
+    И да… понякога идват за книгите, а остават за хората.
+  </div>
+</section>
+
+<footer>
+  ✉️ Mish-Mich © 2026
+</footer>
+
+</body>
+</html>
