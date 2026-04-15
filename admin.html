@@ -22,6 +22,7 @@ input, textarea{
   width:100%;
   padding:10px;
   margin:10px 0;
+  box-sizing:border-box;
 }
 
 button{
@@ -31,6 +32,11 @@ button{
   border:none;
   cursor:pointer;
   margin-top:5px;
+  border-radius:5px;
+}
+
+button.danger{
+  background:#e53935;
 }
 
 .book-item{
@@ -41,12 +47,128 @@ button{
   padding:8px;
   border-bottom:1px solid #eee;
 }
+
+/* MEMBERS */
+.members-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+  gap:16px;
+  margin-top:16px;
+}
+
+.member-card{
+  border:1px solid #f0dcc8;
+  border-radius:12px;
+  padding:16px;
+  background:#fffaf6;
+  position:relative;
+}
+
+.member-card h3{
+  margin:0 0 6px;
+  font-size:16px;
+  color:#5a3e2b;
+}
+
+.member-card p{
+  margin:3px 0;
+  font-size:13px;
+  color:#7a5c3e;
+}
+
+.member-card .badge{
+  display:inline-block;
+  background:#fff3e0;
+  color:#c87a40;
+  border-radius:20px;
+  padding:2px 10px;
+  font-size:12px;
+  margin:2px 3px 2px 0;
+}
+
+.member-card .delete-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  color:#ccc;
+  padding:0;
+  margin:0;
+}
+
+.member-card .delete-btn:hover{
+  color:#e53935;
+}
+
+.member-detail{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #f0dcc8;
+  font-size:13px;
+  color:#7a5c3e;
+  display:none;
+}
+
+.member-card.open .member-detail{
+  display:block;
+}
+
+.toggle-btn{
+  background:none;
+  border:none;
+  color:#ff8f00;
+  cursor:pointer;
+  font-size:13px;
+  padding:6px 0 0;
+  margin:0;
+}
+
+.member-count{
+  font-size:14px;
+  color:#888;
+  margin-bottom:10px;
+}
+
+.search-bar{
+  width:100%;
+  padding:10px 14px;
+  border:1.5px solid #f0dcc8;
+  border-radius:10px;
+  font-size:14px;
+  margin-bottom:14px;
+  box-sizing:border-box;
+  outline:none;
+}
+
+.search-bar:focus{
+  border-color:#ff8f00;
+}
+
+.no-members{
+  text-align:center;
+  color:#bbb;
+  padding:30px;
+  font-size:15px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- MAIN BOOK -->
+<!-- ================= MEMBERS ================= -->
+<section>
+  <h2>👥 Заявки за членство</h2>
+  <div class="member-count" id="memberCount"></div>
+  <input class="search-bar" id="memberSearch" placeholder="🔍 Търси по име или имейл..." oninput="renderMembers()">
+  <button onclick="exportCSV()" style="margin-bottom:12px;">⬇️ Експорт CSV</button>
+  <button class="danger" onclick="clearAllMembers()" style="margin-left:8px; margin-bottom:12px;">🗑️ Изтрий всички</button>
+  <div class="members-grid" id="membersGrid"></div>
+</section>
+
+<!-- ================= MAIN BOOK ================= -->
 <section>
 <h2>📚 Книга на месеца</h2>
 
@@ -55,10 +177,10 @@ button{
 <textarea id="desc" placeholder="Описание"></textarea>
 
 <button onclick="saveMain()">Запази</button>
-<button onclick="removeMain()">Изтрий книга на месеца</button>
+<button onclick="removeMain()">Изтрий книга</button>
 </section>
 
-<!-- QUOTE -->
+<!-- ================= QUOTE ================= -->
 <section>
 <h2>📖 Цитат на деня</h2>
 
@@ -68,7 +190,7 @@ button{
 <button onclick="removeQuote()">Изтрий цитат</button>
 </section>
 
-<!-- ADD BOOK -->
+<!-- ================= BOOKS ================= -->
 <section>
 <h2>📖 Добави книга</h2>
 
@@ -79,15 +201,48 @@ button{
 <button onclick="addBook()">Добави</button>
 </section>
 
-<!-- DELETE BOOKS -->
 <section>
 <h2>🗑️ Управление на книги</h2>
 
-<button onclick="loadBooks()">Зареди книги</button>
+<button onclick="loadBooks()">Зареди</button>
 <div id="booksList"></div>
 </section>
 
-<!-- POLL -->
+<!-- ================= EVENTS ================= -->
+<section>
+<h2>📅 НАЙ-СКОРОШНО СЪБИТИЕ (FEATURED)</h2>
+
+<input id="featuredTitle" placeholder="Заглавие">
+<input id="featuredDate" placeholder="Дата">
+<input id="featuredTime" placeholder="Час">
+<input id="featuredPlace" placeholder="Място">
+<input id="featuredImage" placeholder="Снимка URL">
+
+<button onclick="saveFeaturedEvent()">Запази featured събитие</button>
+<button onclick="removeFeaturedEvent()">Изтрий featured</button>
+</section>
+
+<section>
+<h2>📅 Добави събитие (списък)</h2>
+
+<input id="eventTitle" placeholder="Име">
+<input id="eventDate" placeholder="Дата">
+<input id="eventTime" placeholder="Час">
+<input id="eventPlace" placeholder="Място">
+<input id="eventDesc" placeholder="Описание">
+<input id="eventImage" placeholder="Снимка URL">
+
+<button onclick="addEvent()">Добави събитие</button>
+</section>
+
+<section>
+<h2>📋 Управление на събития</h2>
+
+<button onclick="loadEvents()">Зареди</button>
+<div id="eventsList"></div>
+</section>
+
+<!-- ================= POLL ================= -->
 <section>
 <h2>🗳️ Анкета</h2>
 
@@ -96,20 +251,121 @@ button{
 <input id="opt2" placeholder="Опция 2">
 <input id="opt3" placeholder="Опция 3">
 
-<button onclick="savePoll()">Запази анкета</button>
-<button onclick="resetPoll()">Изтрий анкета</button>
+<button onclick="savePoll()">Запази</button>
+<button onclick="resetPoll()">Изтрий</button>
 </section>
 
-<!-- RESULTS -->
 <section>
 <h2>📊 Резултати</h2>
-<button onclick="showResults()">Покажи резултати</button>
+<button onclick="showResults()">Покажи</button>
 <p id="results"></p>
 </section>
 
 <script>
 
-/* MAIN BOOK */
+/* ================= MEMBERS ================= */
+
+function getMembers(){
+  return JSON.parse(localStorage.getItem("members") || "[]");
+}
+
+function saveMembers(members){
+  localStorage.setItem("members", JSON.stringify(members));
+}
+
+function renderMembers(){
+  const members = getMembers();
+  const query = document.getElementById("memberSearch").value.toLowerCase();
+  const grid = document.getElementById("membersGrid");
+  const countEl = document.getElementById("memberCount");
+
+  const filtered = members.filter(m =>
+    m.name.toLowerCase().includes(query) ||
+    m.email.toLowerCase().includes(query)
+  );
+
+  countEl.innerText = `Общо заявки: ${members.length}${query ? ` | Намерени: ${filtered.length}` : ""}`;
+
+  if(filtered.length === 0){
+    grid.innerHTML = `<div class="no-members">Няма намерени заявки</div>`;
+    return;
+  }
+
+  grid.innerHTML = "";
+
+  filtered.forEach((m, i) => {
+    const realIndex = members.indexOf(m);
+    const genres = (m.genres || []).map(g => `<span class="badge">${g}</span>`).join("");
+
+    const card = document.createElement("div");
+    card.className = "member-card";
+    card.innerHTML = `
+      <button class="delete-btn" onclick="deleteMember(${realIndex})" title="Изтрий">✕</button>
+      <h3>${m.name}</h3>
+      <p>✉️ ${m.email}</p>
+      ${m.phone ? `<p>📞 ${m.phone}</p>` : ""}
+      <p style="font-size:12px; color:#bbb;">📅 ${m.date || "—"}</p>
+      <button class="toggle-btn" onclick="toggleCard(this)">▼ Детайли</button>
+      <div class="member-detail">
+        ${m.source ? `<p><strong>Как е научил/а:</strong> ${m.source}</p>` : ""}
+        ${genres ? `<p><strong>Жанрове:</strong><br>${genres}</p>` : ""}
+        ${m.bio ? `<p><strong>За себе си:</strong><br>${m.bio}</p>` : ""}
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function toggleCard(btn){
+  const card = btn.closest(".member-card");
+  card.classList.toggle("open");
+  btn.textContent = card.classList.contains("open") ? "▲ Скрий" : "▼ Детайли";
+}
+
+function deleteMember(index){
+  if(!confirm("Сигурен/на ли си, че искаш да изтриеш тази заявка?")) return;
+  const members = getMembers();
+  members.splice(index, 1);
+  saveMembers(members);
+  renderMembers();
+}
+
+function clearAllMembers(){
+  if(!confirm("Изтриване на ВСИЧКИ заявки. Сигурен/на ли си?")) return;
+  localStorage.removeItem("members");
+  renderMembers();
+}
+
+function exportCSV(){
+  const members = getMembers();
+  if(members.length === 0){ alert("Няма заявки за експорт."); return; }
+
+  const header = ["Име","Имейл","Телефон","Как е научил/а","Жанрове","За себе си","Дата"];
+  const rows = members.map(m => [
+    m.name,
+    m.email,
+    m.phone || "",
+    m.source || "",
+    (m.genres || []).join("; "),
+    (m.bio || "").replace(/\n/g, " "),
+    m.date || ""
+  ]);
+
+  const csv = [header, ...rows]
+    .map(r => r.map(v => `"${v}"`).join(","))
+    .join("\n");
+
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mish-mich-members.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ================= MAIN BOOK ================= */
 function saveMain(){
   localStorage.setItem("mainBook", JSON.stringify({
     title: title.value,
@@ -124,18 +380,18 @@ function removeMain(){
   alert("Изтрито");
 }
 
-/* QUOTE */
+/* ================= QUOTE ================= */
 function saveQuote(){
   localStorage.setItem("dailyQuote", quoteText.value);
-  alert("Цитатът е запазен");
+  alert("Запазено");
 }
 
 function removeQuote(){
   localStorage.removeItem("dailyQuote");
-  alert("Цитатът е изтрит");
+  alert("Изтрито");
 }
 
-/* BOOKS */
+/* ================= BOOKS ================= */
 function addBook(){
   let books = JSON.parse(localStorage.getItem("books")) || [];
 
@@ -156,15 +412,12 @@ function loadBooks(){
   container.innerHTML = "";
 
   books.forEach((book, index)=>{
-    const div = document.createElement("div");
-    div.className = "book-item";
-
-    div.innerHTML = `
-      <span>${book.title} (${book.month})</span>
-      <button onclick="deleteBook(${index})">❌</button>
+    container.innerHTML += `
+      <div class="book-item">
+        <span>${book.title} (${book.month})</span>
+        <button onclick="deleteBook(${index})">❌</button>
+      </div>
     `;
-
-    container.appendChild(div);
   });
 }
 
@@ -175,7 +428,65 @@ function deleteBook(index){
   loadBooks();
 }
 
-/* POLL */
+/* ================= FEATURED EVENT ================= */
+function saveFeaturedEvent(){
+  localStorage.setItem("featuredEvent", JSON.stringify({
+    title: featuredTitle.value,
+    date: featuredDate.value,
+    time: featuredTime.value,
+    place: featuredPlace.value,
+    image: featuredImage.value
+  }));
+
+  alert("Featured събитието е запазено");
+}
+
+function removeFeaturedEvent(){
+  localStorage.removeItem("featuredEvent");
+  alert("Изтрито");
+}
+
+/* ================= EVENTS LIST ================= */
+function addEvent(){
+  let events = JSON.parse(localStorage.getItem("events")) || [];
+
+  events.push({
+    title: eventTitle.value,
+    date: eventDate.value,
+    time: eventTime.value,
+    place: eventPlace.value,
+    desc: eventDesc.value,
+    image: eventImage.value
+  });
+
+  localStorage.setItem("events", JSON.stringify(events));
+  alert("Добавено");
+}
+
+function loadEvents(){
+  const events = JSON.parse(localStorage.getItem("events")) || [];
+  const container = document.getElementById("eventsList");
+
+  container.innerHTML = "";
+
+  events.forEach((event, index)=>{
+    container.innerHTML += `
+      <div class="book-item">
+        <span>${event.title} | ${event.date}</span>
+        <button onclick="deleteEvent(${index})">❌</button>
+      </div>
+    `;
+  });
+}
+
+function deleteEvent(index){
+  let events = JSON.parse(localStorage.getItem("events")) || [];
+  events.splice(index,1);
+  localStorage.setItem("events", JSON.stringify(events));
+  loadEvents();
+}
+
+/* ================= POLL ================= */
 function savePoll(){
   localStorage.setItem("poll", JSON.stringify({
     question: question.value,
@@ -192,7 +503,7 @@ function resetPoll(){
   alert("Изтрито");
 }
 
-/* RESULTS */
+/* ================= RESULTS ================= */
 function showResults(){
   const poll = JSON.parse(localStorage.getItem("poll"));
   const results = JSON.parse(localStorage.getItem("results")) || [];
@@ -209,6 +520,9 @@ function showResults(){
 
   document.getElementById("results").innerText = output;
 }
+
+/* INIT */
+renderMembers();
 
 </script>
 

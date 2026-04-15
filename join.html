@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Включи се - Mish-Mich</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:linear-gradient(180deg,#fff8f2,#ffe0b2);
+  color:#5a3e2b;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 60px;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(10px);
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  z-index:1000;
+  box-sizing:border-box;
+}
+
+.logo img{
+  height:80px;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+}
+
+nav a{
+  text-decoration:none;
+  color:#5a3e2b;
+  font-weight:500;
+  position:relative;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#ff8f00;
+}
+
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:#ff8f00;
+  transition:0.3s;
+}
+
+nav a:hover::after{
+  width:100%;
+}
+
+
+/* HERO */
+.hero{
+  margin-top:110px;
+  padding:60px 60px 30px;
+  text-align:center;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:52px;
+  margin:0 0 15px;
+  animation:fadeUp 1s ease forwards;
+}
+
+.hero p{
+  font-size:18px;
+  line-height:1.7;
+  max-width:600px;
+  margin:0 auto 40px;
+  opacity:0.85;
+  animation:fadeUp 1.2s ease forwards;
+}
+
+/* PERKS */
+.perks{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:20px;
+  padding:0 60px 60px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s;
+}
+
+.perks.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.perk-card{
+  background:white;
+  padding:28px 24px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.07);
+  text-align:center;
+  transition:0.4s;
+}
+
+.perk-card:hover{
+  transform:translateY(-8px) scale(1.02);
+}
+
+.perk-icon{
+  font-size:32px;
+  margin-bottom:12px;
+}
+
+.perk-card h3{
+  margin:0 0 8px;
+  font-size:16px;
+  font-weight:500;
+}
+
+.perk-card p{
+  margin:0;
+  font-size:14px;
+  opacity:0.75;
+  line-height:1.6;
+}
+
+/* FORM SECTION */
+.form-section{
+  padding:20px 60px 80px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s 0.2s;
+}
+
+.form-section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.form-section h2{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.form-wrap{
+  max-width:600px;
+  margin:0 auto;
+  background:white;
+  padding:40px;
+  border-radius:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.08);
+}
+
+.field{
+  margin-bottom:22px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:500;
+  margin-bottom:7px;
+  opacity:0.8;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  padding:12px 16px;
+  border:1.5px solid #f0dcc8;
+  border-radius:12px;
+  font-family:'Montserrat',sans-serif;
+  font-size:15px;
+  color:#5a3e2b;
+  background:#fffaf6;
+  box-sizing:border-box;
+  transition:border-color 0.3s;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#ff8f00;
+}
+
+.field textarea{
+  resize:vertical;
+  min-height:100px;
+}
+
+.field select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c87a40' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  cursor:pointer;
+}
+
+.checkbox-group{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.checkbox-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.checkbox-item input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  accent-color:#ff8f00;
+  cursor:pointer;
+}
+
+.submit-btn{
+  width:100%;
+  padding:14px;
+  background:#ff8f00;
+  color:white;
+  border:none;
+  border-radius:14px;
+  font-family:'Montserrat',sans-serif;
+  font-size:16px;
+  font-weight:500;
+  cursor:pointer;
+  transition:0.3s;
+  margin-top:10px;
+}
+
+.submit-btn:hover{
+  background:#ff9800;
+  transform:scale(1.02);
+}
+
+/* SUCCESS */
+.success-msg{
+  display:none;
+  text-align:center;
+  padding:30px;
+}
+
+.success-msg h3{
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.success-msg p{
+  opacity:0.75;
+}
+
+/* FOOTER */
+footer{
+  background:#ffcc80;
+  padding:50px;
+  text-align:center;
+}
+
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(30px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+  </div>
+
+  <div class="nav-links">
+    <a href="home.html">Начало</a>
+    <a href="about.html">За нас</a>
+    <a href="books.html">Книжки</a>
+    <a href="join.html">Включи се</a>
+    <a href="events.html">Събития</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Стани част от Mish-Mich 📖</h1>
+  <p>Присъедини се към нашия книжен клуб и открий нови книги, нови хора и нови разговори.</p>
+</div>
+
+<!-- PERKS -->
+<div class="perks" id="perks">
+  <div class="perk-card">
+    <div class="perk-icon">📚</div>
+    <h3>Внимателно подбрани книги</h3>
+    <p>Всеки месец четем заедно и обсъждаме.</p>
+  </div>
+  <div class="perk-card">
+    <div class="perk-icon">💬</div>
+    <h3>Истински разговори</h3>
+    <p>Споделяме мнения, емоции и идеи.</p>
+  </div>
+  <div class="perk-card">
+    <div class="perk-icon">☕</div>
+    <h3>Уютна атмосфера</h3>
+    <p>Срещаме се на живо в приятна обстановка.</p>
+  </div>
+  <div class="perk-card">
+    <div class="perk-icon">✨</div>
+    <h3>Нови приятелства</h3>
+    <p>Запознай се с хора, които обичат книгите.</p>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-section" id="formSection">
+  <h2>Попълни формата</h2>
+  <div class="form-wrap">
+
+    <div id="theForm">
+
+      <div class="field">
+        <label>Име и фамилия</label>
+        <input type="text" id="name" placeholder="Мария Иванова">
+      </div>
+
+      <div class="field">
+        <label>Имейл адрес</label>
+        <input type="email" id="email" placeholder="maria@example.com">
+      </div>
+
+      <div class="field">
+        <label>Телефон (по желание)</label>
+        <input type="tel" id="phone" placeholder="+359 88 ...">
+      </div>
+
+      <div class="field">
+        <label>Как научи за нас?</label>
+        <select id="source">
+          <option value="">— Избери —</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>От приятел / позната</option>
+          <option>Събитие</option>
+          <option>Друго</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Любими жанрове</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" value="Белетристика"> Белетристика</label>
+          <label class="checkbox-item"><input type="checkbox" value="Нонфикшън"> Нонфикшън</label>
+          <label class="checkbox-item"><input type="checkbox" value="Поезия"> Поезия</label>
+          <label class="checkbox-item"><input type="checkbox" value="История"> История</label>
+          <label class="checkbox-item"><input type="checkbox" value="Философия"> Философия</label>
+          <label class="checkbox-item"><input type="checkbox" value="Всичко"> Всичко</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Кажи ни нещо за себе си (по желание)</label>
+        <textarea id="bio" placeholder="Защо искаш да се присъединиш? Коя е любимата ти книга?"></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="submitForm()">Изпрати заявката ✉️</button>
+
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <div style="font-size:48px; margin-bottom:16px;">🎉</div>
+      <h3>Добре дошла в Mish-Mich!</h3>
+      <p>Получихме твоята заявка. Скоро ще се свържем с теб.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  ✉️ Свържи се с нас
+</footer>
+
+<script>
+
+function submitForm(){
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+
+  if(!name || !email){
+    alert("Моля, попълни поне името и имейла си.");
+    return;
+  }
+
+  const genres = [];
+  document.querySelectorAll(".checkbox-item input:checked").forEach(cb => genres.push(cb.value));
+
+  const entry = {
+    name,
+    email,
+    phone: document.getElementById("phone").value.trim(),
+    source: document.getElementById("source").value,
+    genres,
+    bio: document.getElementById("bio").value.trim(),
+    date: new Date().toLocaleDateString("bg-BG")
+  };
+
+  const members = JSON.parse(localStorage.getItem("members") || "[]");
+  members.push(entry);
+  localStorage.setItem("members", JSON.stringify(members));
+
+  document.getElementById("theForm").style.display = "none";
+  document.getElementById("successMsg").style.display = "block";
+}
+
+/* SCROLL ANIMATION */
+const animated = document.querySelectorAll("#perks, #formSection");
+
+window.addEventListener("scroll", () => {
+  animated.forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight - 80){
+      el.classList.add("show");
+    }
+  });
+});
+
+window.dispatchEvent(new Event("scroll"));
+
+</script>
+
+</body>
+</html>
