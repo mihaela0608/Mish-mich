@@ -8,145 +8,217 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+*, *::before, *::after { box-sizing: border-box; }
 
-/* BASE */
-body{
-  margin:0;
-  font-family:'Montserrat',sans-serif;
-  background:#fff8f2;
-  color:#5a3e2b;
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #fff8f2;
+  color: #5a3e2b;
+  overflow-x: hidden;
 }
 
-/* NAV */
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 60px;
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  z-index:1000;
-  box-sizing:border-box;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 1000;
 }
 
-.logo img{
-  height:80px;
+.logo img { height: 60px; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  z-index: 1001;
 }
 
-.nav-links{
-  display:flex;
-  gap:25px;
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #5a3e2b;
+  border-radius: 2px;
+  transition: 0.3s;
 }
 
-nav a{
-  text-decoration:none;
-  color:#5a3e2b;
-  font-weight:500;
-  position:relative;
-  transition:0.3s;
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-links { display: flex; gap: 25px; }
+
+nav a {
+  text-decoration: none;
+  color: #5a3e2b;
+  font-weight: 500;
+  font-size: 14px;
+  position: relative;
+  transition: 0.3s;
 }
 
-nav a:hover{
-  color:#ff8f00;
+nav a:hover { color: #ff8f00; }
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #ff8f00;
+  transition: 0.3s;
 }
 
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-5px;
-  width:0%;
-  height:2px;
-  background:#ff8f00;
-  transition:0.3s;
+nav a:hover::after { width: 100%; }
+
+.hero {
+  margin-top: 84px;
+  height: 55vh;
+  min-height: 260px;
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1512820790803-83ca734da794') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-nav a:hover::after{
-  width:100%;
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,248,242,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-/* HERO WITH BACKGROUND TEXT */
-.hero{
-  margin-top:100px;
-  height:60vh;
-  position:relative;
-  background:url('https://images.unsplash.com/photo-1512820790803-83ca734da794') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 7vw, 64px);
+  text-align: center;
+  margin: 0;
+  animation: fadeUp 1s ease forwards;
 }
 
-.hero-overlay{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(255,248,242,0.88);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+section {
+  padding: 80px 40px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s;
 }
 
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:64px;
-  text-align:center;
+section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* SECTIONS */
-section{
-  padding:100px 60px;
+h2 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 5vw, 40px);
+  margin-bottom: 20px;
 }
 
-h2{
-  text-align:center;
-  font-family:'Playfair Display',serif;
-  font-size:40px;
+.text {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  line-height: 1.8;
+  font-size: clamp(15px, 2vw, 18px);
 }
 
-.text{
-  max-width:900px;
-  margin:auto;
-  text-align:center;
-  line-height:1.8;
-  font-size:18px;
+.fun-box {
+  max-width: 700px;
+  margin: 30px auto 0;
+  background: white;
+  padding: 30px 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  text-align: center;
+  font-size: clamp(14px, 1.8vw, 18px);
+  line-height: 1.9;
 }
 
-/* FUN BLOCK */
-.fun-box{
-  max-width:800px;
-  margin:40px auto;
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  text-align:center;
-  font-size:18px;
+footer {
+  background: #ffcc80;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 15px;
 }
 
-/* FOOTER */
-footer{
-  background:#ffcc80;
-  padding:40px;
-  text-align:center;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 768px) {
+  nav { padding: 12px 20px; }
+
+  .hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff8f2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    z-index: 999;
+    padding: 90px 0 35px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-bottom: 3px solid #ff8f00;
+  }
+
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 20px; }
+
+  section { padding: 60px 25px; }
+
+  .fun-box { padding: 24px 20px; }
+}
+
+@media (max-width: 480px) {
+  .logo img { height: 46px; }
+
+  .hero { height: 45vh; }
+
+  section { padding: 50px 18px; }
+
+  .fun-box { border-radius: 16px; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">
-    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="Mish-Mich лого">
   </div>
 
-  <div class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Отвори меню">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-links" id="navLinks">
     <a href="home.html">Начало</a>
     <a href="about.html">За нас</a>
     <a href="books.html">Книжки</a>
@@ -155,87 +227,94 @@ footer{
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-overlay">
     <h1>За Mish-Mich</h1>
   </div>
 </div>
 
-<!-- STORY -->
 <section>
   <h2>Как започна всичко?</h2>
   <div class="text">
-    Имаше една идея… после още една… после някой каза „ами ако просто се събираме да говорим за книги?“  
+    Имаше една идея… после още една… после някой каза „ами ако просто се събираме да говорим за книги?"
     И така Mish-Mich се случи.
-
     <br><br>
-
-    Не беше планирано. Не беше перфектно. Но беше достатъчно истинско, за да стане място, което хората да започнат да наричат „своето“.
+    Не беше планирано. Не беше перфектно. Но беше достатъчно истинско, за да стане място, което хората да започнат да наричат „своето".
   </div>
 </section>
 
-<!-- FUN -->
 <section>
   <h2>Какво всъщност е Mish-Mich?</h2>
-
   <div class="fun-box">
-    Не е библиотека.  
-    Не е клуб по задължение.  
+    Не е библиотека.<br>
+    Не е клуб по задължение.<br>
     И определено не е място, където ще те изпитват върху последната глава 📖
-
     <br><br>
-
     Mish-Mich е:
     <br><br>
-
-    ☕ малко кафе разговори  
-    📚 малко книги  
-    💬 много мнения (понякога различни)  
-    😄 и доста смях между тях  
-
+    ☕ малко кафе разговори<br>
+    📚 малко книги<br>
+    💬 много мнения (понякога различни)<br>
+    😄 и доста смях между тях
     <br><br>
-
     С други думи… малко миш-маш от хора, мисли и истории.
   </div>
 </section>
 
-<!-- VALUES FUN -->
 <section>
-  <h2>Нашите „правила“</h2>
-
+  <h2>Нашите „правила"</h2>
   <div class="fun-box">
-    ✔ Можеш да си закъснееш — няма наказание  
-    ✔ Можеш да не си прочел книгата — ще импровизираме  
-    ✔ Можеш да говориш прекалено много — ще те оставим 😄  
-    ✔ Можеш да мълчиш — и това е ок  
-
+    ✔ Можеш да си закъснееш — няма наказание<br>
+    ✔ Можеш да не си прочел книгата — ще импровизираме<br>
+    ✔ Можеш да говориш прекалено много — ще те оставим 😄<br>
+    ✔ Можеш да мълчиш — и това е ок
     <br><br>
-
-    Единственото „задължително“:  
+    Единственото „задължително":<br>
     👉 да си себе си
   </div>
 </section>
 
-<!-- COMMUNITY -->
 <section>
   <h2>Какви хора има тук?</h2>
   <div class="text">
     Различни. Много различни.
-
     <br><br>
-
     Но всички имат едно общо нещо — интерес към истории и желание да бъдат част от нещо живо, истинско и човешко.
-
     <br><br>
-
     И да… понякога идват за книгите, а остават за хората.
   </div>
 </section>
 
-<footer>
-  ✉️ Mish-Mich © 2026
-</footer>
+<footer>✉️ Mish-Mich © 2026</footer>
 
+<script>
+const hamburger = document.getElementById("hamburger");
+const navLinks  = document.getElementById("navLinks");
+
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("open");
+  navLinks.classList.toggle("open");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("open");
+    navLinks.classList.remove("open");
+  });
+});
+
+const sections = document.querySelectorAll("section");
+
+function reveal() {
+  sections.forEach(sec => {
+    if (sec.getBoundingClientRect().top < window.innerHeight - 80) {
+      sec.classList.add("show");
+    }
+  });
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
+</script>
 </body>
 </html>

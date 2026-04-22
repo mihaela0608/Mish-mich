@@ -5,224 +5,316 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mish-Mich</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-
-/* BASE */
-body{
-  margin:0;
-  font-family:'Montserrat',sans-serif;
-  background:#fff8f2;
-  color:#5a3e2b;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-/* NAV */
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 60px;
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  z-index:1000;
-  box-sizing:border-box;
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #fff8f2;
+  color: #5a3e2b;
+  overflow-x: hidden;
 }
 
-.logo img{
-  height:80px;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 1000;
 }
 
-.nav-links{
-  display:flex;
-  gap:25px;
+.logo img {
+  height: 60px;
 }
 
-nav a{
-  text-decoration:none;
-  color:#5a3e2b;
-  font-weight:500;
-  position:relative;
-  transition:0.3s;
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
 }
 
-nav a:hover{
-  color:#ff8f00;
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #5a3e2b;
+  border-radius: 2px;
+  transition: 0.3s;
 }
 
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-5px;
-  width:0%;
-  height:2px;
-  background:#ff8f00;
-  transition:0.3s;
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-links {
+  display: flex;
+  gap: 25px;
 }
 
-nav a:hover::after{
-  width:100%;
+nav a {
+  text-decoration: none;
+  color: #5a3e2b;
+  font-weight: 500;
+  font-size: 14px;
+  position: relative;
+  transition: 0.3s;
 }
 
-/* INPUT SECTION */
-.input-section{
-  padding:120px 60px 20px;
-  text-align:center;
+nav a:hover { color: #ff8f00; }
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #ff8f00;
+  transition: 0.3s;
 }
 
-.input-section input{
-  padding:10px;
-  width:300px;
-  margin-right:10px;
+nav a:hover::after { width: 100%; }
+
+.hero {
+  min-height: 100svh;
+  background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f') center/cover no-repeat;
+  display: flex;
+  align-items: center;
 }
 
-.input-section button{
-  padding:10px 15px;
-  background:#ff8f00;
-  color:white;
-  border:none;
-  cursor:pointer;
-  border-radius:5px;
+.hero-overlay {
+  width: 100%;
+  min-height: 100svh;
+  background: linear-gradient(to right, rgba(255,248,242,0.92), rgba(255,140,0,0.15));
+  display: flex;
+  align-items: center;
+  padding: 100px 60px 60px;
 }
 
-/* HERO */
-.hero{
-  height:100vh;
-  background:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  position:relative;
+.hero-content { max-width: 600px; }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 7vw, 70px);
+  margin: 0 0 20px;
+  line-height: 1.15;
+  animation: fadeUp 1s ease forwards;
 }
 
-.hero-overlay{
-  width:100%;
-  height:100%;
-  background:linear-gradient(to right, rgba(255,248,242,0.9), rgba(255,140,0,0.2));
-  display:flex;
-  align-items:center;
-  padding:0 80px;
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #ff8f00;
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: 0.3s;
 }
 
-.hero-content{
-  max-width:600px;
+.btn:hover {
+  transform: scale(1.05);
+  background: #ff9800;
 }
 
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:70px;
-  margin:0;
-  animation:fadeUp 1s ease forwards;
+section {
+  padding: 80px 40px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 1s;
 }
 
-.hero p{
-  font-size:20px;
-  line-height:1.6;
-  animation:fadeUp 1.3s ease forwards;
+section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.btn{
-  margin-top:20px;
-  display:inline-block;
-  padding:12px 30px;
-  background:#ff8f00;
-  color:white;
-  border-radius:25px;
-  text-decoration:none;
-  transition:0.3s;
+h2 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 42px);
+  margin-bottom: 20px;
 }
 
-.btn:hover{
-  transform:scale(1.05);
-  background:#ff9800;
+.text {
+  max-width: 700px;
+  margin: auto;
+  text-align: center;
+  line-height: 1.8;
+  font-size: clamp(15px, 2vw, 18px);
 }
 
-/* SECTIONS */
-section{
-  padding:120px 60px;
-  opacity:0;
-  transform:translateY(50px);
-  transition:1s;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-section.show{
-  opacity:1;
-  transform:translateY(0);
+.card {
+  background: white;
+  padding: 28px 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.4s;
+  text-align: center;
 }
 
-h2{
-  text-align:center;
-  font-family:'Playfair Display',serif;
-  font-size:42px;
+.card h3 { font-size: 18px; margin: 0 0 10px; }
+.card p  { font-size: 14px; line-height: 1.6; margin: 0; }
+
+.card:hover { transform: translateY(-8px) scale(1.02); }
+
+.timer-section {
+  text-align: center;
+  padding: 80px 20px;
+  background: #fff;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 1s;
 }
 
-/* TEXT */
-.text{
-  max-width:900px;
-  margin:auto;
-  text-align:center;
-  line-height:1.8;
-  font-size:18px;
+.timer-section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
-  margin-top:40px;
+#countdown-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
 }
 
-/* CARD */
-.card{
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  transition:0.4s;
-  text-align:center;
+.time-box {
+  background: #fff8f2;
+  padding: 16px 12px;
+  border-radius: 12px;
+  width: clamp(68px, 18vw, 95px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border-bottom: 4px solid #ff8f00;
 }
 
-.card:hover{
-  transform:translateY(-10px) scale(1.03);
+.time-box span {
+  font-size: clamp(22px, 5vw, 36px);
+  font-weight: bold;
+  display: block;
+  color: #5a3e2b;
 }
 
-/* FOOTER */
-footer{
-  background:#ffcc80;
-  padding:50px;
-  text-align:center;
+.time-box p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 1px;
 }
 
-/* ANIMATION */
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(30px);
+#event-status {
+  margin-top: 20px;
+  font-weight: 500;
+  color: #ff8f00;
+}
+
+footer {
+  background: #ffcc80;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 15px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 12px 20px; }
+
+  .hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff8f2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    z-index: 999;
+    padding: 90px 0 35px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-bottom: 3px solid #ff8f00;
   }
-  to{
-    opacity:1;
-    transform:translateY(0);
+
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 20px; }
+
+  .hero-overlay {
+    padding: 90px 25px 50px;
+    justify-content: center;
+    text-align: center;
   }
+
+  .hero-content { max-width: 100%; }
+
+  section { padding: 60px 25px; }
+
+  .grid { grid-template-columns: 1fr 1fr; }
 }
 
+@media (max-width: 480px) {
+  .logo img { height: 46px; }
+
+  .grid { grid-template-columns: 1fr; }
+
+  .btn { padding: 11px 22px; font-size: 14px; }
+
+  section { padding: 50px 18px; }
+
+  .timer-section { padding: 60px 15px; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">
-    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="Mish-Mich лого">
   </div>
 
-  <div class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Отвори меню">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="nav-links" id="navLinks">
     <a href="home.html">Начало</a>
     <a href="about.html">За нас</a>
     <a href="books.html">Книжки</a>
@@ -231,56 +323,44 @@ footer{
   </div>
 </nav>
 
-
-
-<!-- HERO -->
 <div class="hero" id="hero">
   <div class="hero-overlay">
     <div class="hero-content">
       <h1>Добре дошли в Миш-Мич!</h1>
-      
-      <a href="#join" class="btn" style="background:#ffb74d; margin-left:10px;">Присъедини се</a>
+      <a href="#join" class="btn" style="background:#ffb74d;">Присъедини се</a>
     </div>
   </div>
 </div>
 
-<!-- ABOUT -->
 <section id="about">
   <h2>Какво е Mish-Mich?</h2>
   <div class="text">
-    Mish-Mich е уютно пространство, където хората се срещат чрез книгите.  
+    Mish-Mich е уютно пространство, където хората се срещат чрез книгите.
     Това е място за разговори, идеи и истински човешки връзки.
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <h2>Какво ще откриеш</h2>
-
   <div class="grid">
-    <div class="card">
-      <h3>📖 Книги</h3>
-      <p>Обсъждаме внимателно подбрани книги и теми.</p>
-    </div>
-
-    <div class="card">
-      <h3>💬 Разговори</h3>
-      <p>Свободни дискусии и обмен на идеи.</p>
-    </div>
-
-    <div class="card">
-      <h3>☕ Уют</h3>
-      <p>Спокойна атмосфера за споделяне.</p>
-    </div>
-
-    <div class="card">
-      <h3>✨ Вдъхновение</h3>
-      <p>Моменти, които остават.</p>
-    </div>
+    <div class="card"><h3>📖 Книги</h3><p>Обсъждаме внимателно подбрани книги и теми.</p></div>
+    <div class="card"><h3>💬 Разговори</h3><p>Свободни дискусии и обмен на идеи.</p></div>
+    <div class="card"><h3>☕ Уют</h3><p>Спокойна атмосфера за споделяне.</p></div>
+    <div class="card"><h3>✨ Вдъхновение</h3><p>Моменти, които остават.</p></div>
   </div>
 </section>
 
-<!-- COMMUNITY -->
+<section class="timer-section">
+  <h2>До следващата ни среща остават:</h2>
+  <div id="countdown-container">
+    <div class="time-box"><span id="days">00</span><p>Дни</p></div>
+    <div class="time-box"><span id="hours">00</span><p>Часа</p></div>
+    <div class="time-box"><span id="minutes">00</span><p>Мин</p></div>
+    <div class="time-box"><span id="seconds">00</span><p>Сек</p></div>
+  </div>
+  <p id="event-status"></p>
+</section>
+
 <section id="community">
   <h2>Общност</h2>
   <div class="text">
@@ -288,47 +368,67 @@ footer{
   </div>
 </section>
 
-<!-- JOIN -->
 <section id="join">
   <h2>Стани част от Mish-Mich</h2>
   <div class="text">
     Ако търсиш място, където да се чувстваш добре и да срещнеш нови хора — това е твоето място.
   </div>
-
   <div style="text-align:center; margin-top:30px;">
-    <a href="#" class="btn">Свържи се с нас</a>
+    <a href="join.html" class="btn">Свържи се с нас</a>
   </div>
 </section>
 
-<footer>
-  ✉️ Свържи се с нас
-</footer>
+<footer>✉️ Свържи се с нас</footer>
 
 <script>
+const hamburger = document.getElementById("hamburger");
+const navLinks  = document.getElementById("navLinks");
 
-/* CHANGE HERO BACKGROUND */
-function changeHeroBg(){
-  const input = document.getElementById("imageInput").value;
-  const hero = document.getElementById("hero");
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("open");
+  navLinks.classList.toggle("open");
+});
 
-  if(input){
-    hero.style.background = `url('${input}') center/cover no-repeat`;
-  }
-}
-
-/* SCROLL ANIMATION */
-const sections = document.querySelectorAll("section");
-
-window.addEventListener("scroll", () => {
-  sections.forEach(sec => {
-    const top = sec.getBoundingClientRect().top;
-    if(top < window.innerHeight - 100){
-      sec.classList.add("show");
-    }
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("open");
+    navLinks.classList.remove("open");
   });
 });
 
-</script>
+const allSections = document.querySelectorAll("section, .timer-section");
 
+function reveal() {
+  allSections.forEach(sec => {
+    if (sec.getBoundingClientRect().top < window.innerHeight - 80) {
+      sec.classList.add("show");
+    }
+  });
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+function getNextMeeting() {
+  const first    = new Date("2026-06-08T19:00:00");
+  const now      = new Date();
+  if (now < first) return first;
+  const interval = 14 * 24 * 60 * 60 * 1000;
+  const cycles   = Math.floor((now - first) / interval);
+  return new Date(first.getTime() + (cycles + 1) * interval);
+}
+
+let target = getNextMeeting();
+
+setInterval(() => {
+  const dist = target - Date.now();
+  if (dist < 0) { target = getNextMeeting(); return; }
+
+  document.getElementById("days").innerText    = String(Math.floor(dist / 86400000)).padStart(2,"0");
+  document.getElementById("hours").innerText   = String(Math.floor(dist % 86400000 / 3600000)).padStart(2,"0");
+  document.getElementById("minutes").innerText = String(Math.floor(dist % 3600000 / 60000)).padStart(2,"0");
+  document.getElementById("seconds").innerText = String(Math.floor(dist % 60000 / 1000)).padStart(2,"0");
+}, 1000);
+</script>
 </body>
 </html>

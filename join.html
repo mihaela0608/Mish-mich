@@ -8,298 +8,349 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+*, *::before, *::after { box-sizing: border-box; }
 
-body{
-  margin:0;
-  font-family:'Montserrat',sans-serif;
-  background:linear-gradient(180deg,#fff8f2,#ffe0b2);
-  color:#5a3e2b;
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(180deg, #fff8f2, #ffe0b2);
+  color: #5a3e2b;
+  overflow-x: hidden;
 }
 
-/* NAV */
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 60px;
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  z-index:1000;
-  box-sizing:border-box;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 1000;
 }
 
-.logo img{
-  height:80px;
+.logo img { height: 60px; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  z-index: 1001;
 }
 
-.nav-links{
-  display:flex;
-  gap:25px;
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #5a3e2b;
+  border-radius: 2px;
+  transition: 0.3s;
 }
 
-nav a{
-  text-decoration:none;
-  color:#5a3e2b;
-  font-weight:500;
-  position:relative;
-  transition:0.3s;
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-links {
+  display: flex;
+  gap: 25px;
 }
 
-nav a:hover{
-  color:#ff8f00;
+nav a {
+  text-decoration: none;
+  color: #5a3e2b;
+  font-weight: 500;
+  font-size: 14px;
+  position: relative;
+  transition: 0.3s;
 }
 
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-5px;
-  width:0%;
-  height:2px;
-  background:#ff8f00;
-  transition:0.3s;
+nav a:hover { color: #ff8f00; }
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #ff8f00;
+  transition: 0.3s;
 }
 
-nav a:hover::after{
-  width:100%;
+nav a:hover::after { width: 100%; }
+
+.hero {
+  margin-top: 90px;
+  padding: 60px 40px 30px;
+  text-align: center;
 }
 
-
-/* HERO */
-.hero{
-  margin-top:110px;
-  padding:60px 60px 30px;
-  text-align:center;
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 6vw, 52px);
+  margin: 0 0 15px;
+  animation: fadeUp 1s ease forwards;
+  line-height: 1.2;
 }
 
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:52px;
-  margin:0 0 15px;
-  animation:fadeUp 1s ease forwards;
+.hero p {
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  opacity: 0.85;
+  animation: fadeUp 1.2s ease forwards;
 }
 
-.hero p{
-  font-size:18px;
-  line-height:1.7;
-  max-width:600px;
-  margin:0 auto 40px;
-  opacity:0.85;
-  animation:fadeUp 1.2s ease forwards;
+.perks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 40px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s;
 }
 
-/* PERKS */
-.perks{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:20px;
-  padding:0 60px 60px;
-  opacity:0;
-  transform:translateY(30px);
-  transition:1s;
+.perks.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.perks.show{
-  opacity:1;
-  transform:translateY(0);
+.perk-card {
+  background: white;
+  padding: 28px 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+  text-align: center;
+  transition: 0.4s;
 }
 
-.perk-card{
-  background:white;
-  padding:28px 24px;
-  border-radius:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.07);
-  text-align:center;
-  transition:0.4s;
+.perk-card:hover { transform: translateY(-8px) scale(1.02); }
+
+.perk-icon { font-size: 32px; margin-bottom: 12px; }
+
+.perk-card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-.perk-card:hover{
-  transform:translateY(-8px) scale(1.02);
+.perk-card p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 1.6;
 }
 
-.perk-icon{
-  font-size:32px;
-  margin-bottom:12px;
+.form-section {
+  padding: 20px 20px 80px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s 0.2s;
 }
 
-.perk-card h3{
-  margin:0 0 8px;
-  font-size:16px;
-  font-weight:500;
+.form-section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.perk-card p{
-  margin:0;
-  font-size:14px;
-  opacity:0.75;
-  line-height:1.6;
+.form-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-/* FORM SECTION */
-.form-section{
-  padding:20px 60px 80px;
-  opacity:0;
-  transform:translateY(30px);
-  transition:1s 0.2s;
+.form-wrap {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
-.form-section.show{
-  opacity:1;
-  transform:translateY(0);
-}
+.field { margin-bottom: 22px; }
 
-.form-section h2{
-  font-family:'Playfair Display',serif;
-  font-size:36px;
-  text-align:center;
-  margin-bottom:40px;
-}
-
-.form-wrap{
-  max-width:600px;
-  margin:0 auto;
-  background:white;
-  padding:40px;
-  border-radius:25px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.08);
-}
-
-.field{
-  margin-bottom:22px;
-}
-
-.field label{
-  display:block;
-  font-size:13px;
-  font-weight:500;
-  margin-bottom:7px;
-  opacity:0.8;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 7px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .field input,
 .field select,
-.field textarea{
-  width:100%;
-  padding:12px 16px;
-  border:1.5px solid #f0dcc8;
-  border-radius:12px;
-  font-family:'Montserrat',sans-serif;
-  font-size:15px;
-  color:#5a3e2b;
-  background:#fffaf6;
-  box-sizing:border-box;
-  transition:border-color 0.3s;
-  outline:none;
+.field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #f0dcc8;
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  color: #5a3e2b;
+  background: #fffaf6;
+  transition: border-color 0.3s;
+  outline: none;
 }
 
 .field input:focus,
 .field select:focus,
-.field textarea:focus{
-  border-color:#ff8f00;
+.field textarea:focus { border-color: #ff8f00; }
+
+.field textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.field textarea{
-  resize:vertical;
-  min-height:100px;
+.field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c87a40' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-color: #fffaf6;
+  cursor: pointer;
 }
 
-.field select{
-  appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c87a40' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 16px center;
-  cursor:pointer;
+.checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.checkbox-group{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-.checkbox-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:14px;
-  cursor:pointer;
+.checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #ff8f00;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.checkbox-item input[type="checkbox"]{
-  width:16px;
-  height:16px;
-  accent-color:#ff8f00;
-  cursor:pointer;
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #ff8f00;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
 }
 
-.submit-btn{
-  width:100%;
-  padding:14px;
-  background:#ff8f00;
-  color:white;
-  border:none;
-  border-radius:14px;
-  font-family:'Montserrat',sans-serif;
-  font-size:16px;
-  font-weight:500;
-  cursor:pointer;
-  transition:0.3s;
-  margin-top:10px;
+.submit-btn:hover {
+  background: #ff9800;
+  transform: scale(1.02);
 }
 
-.submit-btn:hover{
-  background:#ff9800;
-  transform:scale(1.02);
+.success-msg {
+  display: none;
+  text-align: center;
+  padding: 30px;
 }
 
-/* SUCCESS */
-.success-msg{
-  display:none;
-  text-align:center;
-  padding:30px;
+.success-msg h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
-.success-msg h3{
-  font-family:'Playfair Display',serif;
-  font-size:28px;
-  margin-bottom:10px;
+.success-msg p { opacity: 0.75; }
+
+footer {
+  background: #ffcc80;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 15px;
 }
 
-.success-msg p{
-  opacity:0.75;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* FOOTER */
-footer{
-  background:#ffcc80;
-  padding:50px;
-  text-align:center;
+@media (max-width: 768px) {
+  nav { padding: 12px 20px; }
+
+  .hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff8f2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    z-index: 999;
+    padding: 90px 0 35px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-bottom: 3px solid #ff8f00;
+  }
+
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 20px; }
+
+  .hero { padding: 60px 20px 20px; }
+
+  .perks { padding: 0 20px 40px; }
+
+  .form-wrap { padding: 28px 20px; }
 }
 
-@keyframes fadeUp{
-  from{ opacity:0; transform:translateY(30px); }
-  to{ opacity:1; transform:translateY(0); }
-}
+@media (max-width: 480px) {
+  .logo img { height: 46px; }
 
+  .perks { grid-template-columns: 1fr; }
+
+  .checkbox-group { grid-template-columns: 1fr; }
+
+  .form-wrap { border-radius: 18px; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">
-    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="Mish-Mich лого">
   </div>
 
-  <div class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Отвори меню">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-links" id="navLinks">
     <a href="home.html">Начало</a>
     <a href="about.html">За нас</a>
     <a href="books.html">Книжки</a>
@@ -308,58 +359,35 @@ footer{
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <h1>Стани част от Mish-Mich 📖</h1>
   <p>Присъедини се към нашия книжен клуб и открий нови книги, нови хора и нови разговори.</p>
 </div>
 
-<!-- PERKS -->
 <div class="perks" id="perks">
-  <div class="perk-card">
-    <div class="perk-icon">📚</div>
-    <h3>Внимателно подбрани книги</h3>
-    <p>Всеки месец четем заедно и обсъждаме.</p>
-  </div>
-  <div class="perk-card">
-    <div class="perk-icon">💬</div>
-    <h3>Истински разговори</h3>
-    <p>Споделяме мнения, емоции и идеи.</p>
-  </div>
-  <div class="perk-card">
-    <div class="perk-icon">☕</div>
-    <h3>Уютна атмосфера</h3>
-    <p>Срещаме се на живо в приятна обстановка.</p>
-  </div>
-  <div class="perk-card">
-    <div class="perk-icon">✨</div>
-    <h3>Нови приятелства</h3>
-    <p>Запознай се с хора, които обичат книгите.</p>
-  </div>
+  <div class="perk-card"><div class="perk-icon">📚</div><h3>Внимателно подбрани книги</h3><p>Всеки месец четем заедно и обсъждаме.</p></div>
+  <div class="perk-card"><div class="perk-icon">💬</div><h3>Истински разговори</h3><p>Споделяме мнения, емоции и идеи.</p></div>
+  <div class="perk-card"><div class="perk-icon">☕</div><h3>Уютна атмосфера</h3><p>Срещаме се на живо в приятна обстановка.</p></div>
+  <div class="perk-card"><div class="perk-icon">✨</div><h3>Нови приятелства</h3><p>Запознай се с хора, които обичат книгите.</p></div>
 </div>
 
-<!-- FORM -->
 <div class="form-section" id="formSection">
   <h2>Попълни формата</h2>
   <div class="form-wrap">
 
     <div id="theForm">
-
       <div class="field">
         <label>Име и фамилия</label>
         <input type="text" id="name" placeholder="Мария Иванова">
       </div>
-
       <div class="field">
         <label>Имейл адрес</label>
         <input type="email" id="email" placeholder="maria@example.com">
       </div>
-
       <div class="field">
         <label>Телефон (по желание)</label>
         <input type="tel" id="phone" placeholder="+359 88 ...">
       </div>
-
       <div class="field">
         <label>Как научи за нас?</label>
         <select id="source">
@@ -371,7 +399,6 @@ footer{
           <option>Друго</option>
         </select>
       </div>
-
       <div class="field">
         <label>Любими жанрове</label>
         <div class="checkbox-group">
@@ -383,14 +410,11 @@ footer{
           <label class="checkbox-item"><input type="checkbox" value="Всичко"> Всичко</label>
         </div>
       </div>
-
       <div class="field">
         <label>Кажи ни нещо за себе си (по желание)</label>
         <textarea id="bio" placeholder="Защо искаш да се присъединиш? Коя е любимата ти книга?"></textarea>
       </div>
-
       <button class="submit-btn" onclick="submitForm()">Изпрати заявката ✉️</button>
-
     </div>
 
     <div class="success-msg" id="successMsg">
@@ -402,17 +426,42 @@ footer{
   </div>
 </div>
 
-<footer>
-  ✉️ Свържи се с нас
-</footer>
+<footer>✉️ Свържи се с нас</footer>
 
 <script>
+const hamburger = document.getElementById("hamburger");
+const navLinks  = document.getElementById("navLinks");
 
-function submitForm(){
-  const name = document.getElementById("name").value.trim();
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("open");
+  navLinks.classList.toggle("open");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("open");
+    navLinks.classList.remove("open");
+  });
+});
+
+const animated = document.querySelectorAll("#perks, #formSection");
+
+function reveal() {
+  animated.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 80) {
+      el.classList.add("show");
+    }
+  });
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+function submitForm() {
+  const name  = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
 
-  if(!name || !email){
+  if (!name || !email) {
     alert("Моля, попълни поне името и имейла си.");
     return;
   }
@@ -423,35 +472,20 @@ function submitForm(){
   const entry = {
     name,
     email,
-    phone: document.getElementById("phone").value.trim(),
+    phone:  document.getElementById("phone").value.trim(),
     source: document.getElementById("source").value,
     genres,
-    bio: document.getElementById("bio").value.trim(),
-    date: new Date().toLocaleDateString("bg-BG")
+    bio:    document.getElementById("bio").value.trim(),
+    date:   new Date().toLocaleDateString("bg-BG")
   };
 
   const members = JSON.parse(localStorage.getItem("members") || "[]");
   members.push(entry);
   localStorage.setItem("members", JSON.stringify(members));
 
-  document.getElementById("theForm").style.display = "none";
+  document.getElementById("theForm").style.display  = "none";
   document.getElementById("successMsg").style.display = "block";
 }
-
-/* SCROLL ANIMATION */
-const animated = document.querySelectorAll("#perks, #formSection");
-
-window.addEventListener("scroll", () => {
-  animated.forEach(el => {
-    if(el.getBoundingClientRect().top < window.innerHeight - 80){
-      el.classList.add("show");
-    }
-  });
-});
-
-window.dispatchEvent(new Event("scroll"));
-
 </script>
-
 </body>
 </html>

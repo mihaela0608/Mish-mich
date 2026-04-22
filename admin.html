@@ -48,7 +48,6 @@ button.danger{
   border-bottom:1px solid #eee;
 }
 
-/* MEMBERS */
 .members-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
@@ -158,7 +157,6 @@ button.danger{
 
 <body>
 
-<!-- ================= MEMBERS ================= -->
 <section>
   <h2>👥 Заявки за членство</h2>
   <div class="member-count" id="memberCount"></div>
@@ -168,89 +166,70 @@ button.danger{
   <div class="members-grid" id="membersGrid"></div>
 </section>
 
-<!-- ================= MAIN BOOK ================= -->
 <section>
 <h2>📚 Книга на месеца</h2>
-
 <input id="title" placeholder="Име">
 <input id="image" placeholder="Снимка URL">
 <textarea id="desc" placeholder="Описание"></textarea>
-
 <button onclick="saveMain()">Запази</button>
 <button onclick="removeMain()">Изтрий книга</button>
 </section>
 
-<!-- ================= QUOTE ================= -->
 <section>
 <h2>📖 Цитат на деня</h2>
-
 <textarea id="quoteText" placeholder="Напиши цитат..."></textarea>
-
 <button onclick="saveQuote()">Запази цитат</button>
 <button onclick="removeQuote()">Изтрий цитат</button>
 </section>
 
-<!-- ================= BOOKS ================= -->
 <section>
 <h2>📖 Добави книга</h2>
-
 <input id="bookTitle" placeholder="Име">
 <input id="bookImage" placeholder="Снимка URL">
 <input id="bookMonth" placeholder="Месец">
-
 <button onclick="addBook()">Добави</button>
 </section>
 
 <section>
 <h2>🗑️ Управление на книги</h2>
-
 <button onclick="loadBooks()">Зареди</button>
 <div id="booksList"></div>
 </section>
 
-<!-- ================= EVENTS ================= -->
 <section>
 <h2>📅 НАЙ-СКОРОШНО СЪБИТИЕ (FEATURED)</h2>
-
 <input id="featuredTitle" placeholder="Заглавие">
 <input id="featuredDate" placeholder="Дата">
 <input id="featuredTime" placeholder="Час">
 <input id="featuredPlace" placeholder="Място">
 <input id="featuredImage" placeholder="Снимка URL">
-
 <button onclick="saveFeaturedEvent()">Запази featured събитие</button>
 <button onclick="removeFeaturedEvent()">Изтрий featured</button>
 </section>
 
 <section>
 <h2>📅 Добави събитие (списък)</h2>
-
 <input id="eventTitle" placeholder="Име">
 <input id="eventDate" placeholder="Дата">
 <input id="eventTime" placeholder="Час">
 <input id="eventPlace" placeholder="Място">
 <input id="eventDesc" placeholder="Описание">
 <input id="eventImage" placeholder="Снимка URL">
-
 <button onclick="addEvent()">Добави събитие</button>
 </section>
 
 <section>
 <h2>📋 Управление на събития</h2>
-
 <button onclick="loadEvents()">Зареди</button>
 <div id="eventsList"></div>
 </section>
 
-<!-- ================= POLL ================= -->
 <section>
 <h2>🗳️ Анкета</h2>
-
 <input id="question" placeholder="Въпрос">
 <input id="opt1" placeholder="Опция 1">
 <input id="opt2" placeholder="Опция 2">
 <input id="opt3" placeholder="Опция 3">
-
 <button onclick="savePoll()">Запази</button>
 <button onclick="resetPoll()">Изтрий</button>
 </section>
@@ -262,9 +241,6 @@ button.danger{
 </section>
 
 <script>
-
-/* ================= MEMBERS ================= */
-
 function getMembers(){
   return JSON.parse(localStorage.getItem("members") || "[]");
 }
@@ -365,7 +341,6 @@ function exportCSV(){
   URL.revokeObjectURL(url);
 }
 
-/* ================= MAIN BOOK ================= */
 function saveMain(){
   localStorage.setItem("mainBook", JSON.stringify({
     title: title.value,
@@ -380,7 +355,6 @@ function removeMain(){
   alert("Изтрито");
 }
 
-/* ================= QUOTE ================= */
 function saveQuote(){
   localStorage.setItem("dailyQuote", quoteText.value);
   alert("Запазено");
@@ -391,7 +365,6 @@ function removeQuote(){
   alert("Изтрито");
 }
 
-/* ================= BOOKS ================= */
 function addBook(){
   let books = JSON.parse(localStorage.getItem("books")) || [];
 
@@ -428,7 +401,6 @@ function deleteBook(index){
   loadBooks();
 }
 
-/* ================= FEATURED EVENT ================= */
 function saveFeaturedEvent(){
   localStorage.setItem("featuredEvent", JSON.stringify({
     title: featuredTitle.value,
@@ -446,7 +418,6 @@ function removeFeaturedEvent(){
   alert("Изтрито");
 }
 
-/* ================= EVENTS LIST ================= */
 function addEvent(){
   let events = JSON.parse(localStorage.getItem("events")) || [];
 
@@ -486,7 +457,6 @@ function deleteEvent(index){
   loadEvents();
 }
 
-/* ================= POLL ================= */
 function savePoll(){
   localStorage.setItem("poll", JSON.stringify({
     question: question.value,
@@ -503,7 +473,6 @@ function resetPoll(){
   alert("Изтрито");
 }
 
-/* ================= RESULTS ================= */
 function showResults(){
   const poll = JSON.parse(localStorage.getItem("poll"));
   const results = JSON.parse(localStorage.getItem("results")) || [];
@@ -521,10 +490,7 @@ function showResults(){
   document.getElementById("results").innerText = output;
 }
 
-/* INIT */
 renderMembers();
-
 </script>
-
 </body>
 </html>

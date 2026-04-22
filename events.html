@@ -3,208 +3,364 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Събития - Mish-Mich</title>
+<title>Събития - Mish-Mich</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+*, *::before, *::after { box-sizing: border-box; }
 
-/* BASE */
-body{
-  margin:0;
-  font-family:'Montserrat',sans-serif;
-  background:linear-gradient(180deg,#fff8f2,#ffe0b2);
-  color:#5a3e2b;
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(180deg, #fff8f2, #ffe0b2);
+  color: #5a3e2b;
+  overflow-x: hidden;
 }
 
-/* NAV */
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 60px;
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  z-index:1000;
-  box-sizing:border-box;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 1000;
 }
 
-.logo img{
-  height:80px;
+.logo img { height: 60px; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  z-index: 1001;
 }
 
-.nav-links{
-  display:flex;
-  gap:25px;
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #5a3e2b;
+  border-radius: 2px;
+  transition: 0.3s;
 }
 
-nav a{
-  text-decoration:none;
-  color:#5a3e2b;
-  font-weight:500;
-  position:relative;
-  transition:0.3s;
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-links { display: flex; gap: 25px; }
+
+nav a {
+  text-decoration: none;
+  color: #5a3e2b;
+  font-weight: 500;
+  font-size: 14px;
+  position: relative;
+  transition: 0.3s;
 }
 
-nav a:hover{
-  color:#ff8f00;
+nav a:hover { color: #ff8f00; }
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #ff8f00;
+  transition: 0.3s;
 }
 
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-5px;
-  width:0%;
-  height:2px;
-  background:#ff8f00;
-  transition:0.3s;
+nav a:hover::after { width: 100%; }
+
+.header {
+  margin-top: 84px;
+  padding: 40px 40px 20px;
 }
 
-nav a:hover::after{
-  width:100%;
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 42px);
+  margin: 0;
 }
 
-/* HEADER */
-.header{
-  margin-top:110px;
-  padding:40px 60px;
+.top-section {
+  display: flex;
+  gap: 30px;
+  padding: 0 40px 40px;
+  flex-wrap: wrap;
 }
 
-.header h1{
-  font-family:'Playfair Display';
-  font-size:42px;
+.featured {
+  flex: 2;
+  min-width: 280px;
+  background: white;
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* MAIN */
-.top-section{
-  display:flex;
-  gap:40px;
-  padding:0 60px;
+.featured img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 4px solid #ff8f00;
 }
 
-/* FEATURED */
-.featured{
-  flex:2;
-  background:white;
-  padding:40px;
-  border-radius:25px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.1);
-  position:relative;
-  overflow:hidden;
+.featured h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  margin: 12px 0 10px;
+  padding-right: 90px;
 }
 
-.featured img{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  object-fit:cover;
-  position:absolute;
-  top:20px;
-  right:20px;
-  border:4px solid #ff8f00;
+.featured p {
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.6;
+  margin: 6px 0;
 }
 
-.tag{
-  display:inline-block;
-  background:#ff8f00;
-  color:white;
-  padding:6px 15px;
-  border-radius:20px;
+.tag {
+  display: inline-block;
+  background: #ff8f00;
+  color: white;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 13px;
 }
 
-/* CALENDAR */
-.calendar{
-  flex:1;
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.1);
+.calendar {
+  flex: 1;
+  min-width: 260px;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
-.weekdays{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  font-size:12px;
-  text-align:center;
-  margin-bottom:10px;
-  opacity:0.7;
+.calendar-month {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: bold;
 }
 
-.calendar-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:8px;
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 8px;
+  opacity: 0.7;
 }
 
-.day{
-  height:45px;
-  border-radius:10px;
-  background:#fff3e0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  font-weight:normal;
-  position:relative;
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
 }
 
-/* normal event */
-.day.event{
-  background:#ffb74d;
-  color:white;
-  font-weight:bold;
+.day {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: #fff3e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(11px, 1.5vw, 14px);
+  position: relative;
 }
 
-/* featured event in calendar — renamed to avoid conflict with .featured flex container */
-.day.featured-day{
-  background:#e53935;
-  color:white;
-  font-weight:bold;
-  box-shadow:0 0 6px rgba(229,57,53,0.4);
+.day.empty { background: transparent; }
+
+.day.event {
+  background: #ffb74d;
+  color: white;
+  font-weight: bold;
 }
 
-/* EVENTS */
-.events{
-  padding:60px;
+.day.featured-day {
+  background: #e53935;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 6px rgba(229,57,53,0.4);
 }
 
-.event-card{
-  background:white;
-  padding:25px;
-  border-radius:20px;
-  margin-bottom:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+.day.today {
+  outline: 2px solid #ff8f00;
 }
 
-/* BUTTON */
-.btn{
-  margin-top:15px;
-  display:inline-block;
-  padding:12px 18px;
-  background:#ff8f00;
-  color:white;
-  border-radius:12px;
-  text-decoration:none;
+.events {
+  padding: 20px 40px 80px;
 }
 
+.events h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 34px);
+  margin-bottom: 25px;
+}
+
+.event-card {
+  background: white;
+  padding: 25px 28px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.event-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px, 2.5vw, 22px);
+  margin: 0 0 8px;
+}
+
+.event-card p {
+  font-size: clamp(13px, 1.8vw, 15px);
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.btn {
+  margin-top: 14px;
+  display: inline-block;
+  padding: 11px 18px;
+  background: #ff8f00;
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #ff9800;
+  transform: scale(1.03);
+}
+
+footer {
+  background: #ffcc80;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  nav { padding: 12px 20px; }
+
+  .hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff8f2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    z-index: 999;
+    padding: 90px 0 35px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-bottom: 3px solid #ff8f00;
+  }
+
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 20px; }
+
+  .header { padding: 30px 20px 10px; }
+
+  .top-section {
+    padding: 0 20px 30px;
+    flex-direction: column;
+  }
+
+  .featured { min-width: unset; }
+
+  .calendar {
+    min-width: unset;
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 12px;
+  }
+
+  .calendar-month { font-size: 15px; margin-bottom: 10px; }
+
+  .weekdays {
+    font-size: 10px;
+    margin-bottom: 6px;
+    gap: 3px;
+  }
+
+  .calendar-grid { gap: 4px; }
+
+  .day {
+    border-radius: 6px;
+    font-size: 12px;
+  }
+
+  .events { padding: 10px 20px 60px; }
+}
+
+@media (max-width: 480px) {
+  .logo img { height: 46px; }
+
+  .featured img {
+    width: 60px;
+    height: 60px;
+    top: 15px;
+    right: 15px;
+  }
+
+  .featured h2 { padding-right: 70px; }
+
+  .event-card { padding: 20px 18px; }
+
+  .calendar { padding: 12px 10px; }
+
+  .weekdays { font-size: 9px; }
+
+  .day { font-size: 11px; border-radius: 5px; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">
-    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="logo">
+    <img src="C:\Users\Mihaela\Downloads\logo1.png" alt="Mish-Mich лого">
   </div>
 
-  <div class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Отвори меню">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-links" id="navLinks">
     <a href="home.html">Начало</a>
     <a href="about.html">За нас</a>
     <a href="books.html">Книжки</a>
@@ -213,22 +369,19 @@ nav a:hover::after{
   </div>
 </nav>
 
-<!-- HEADER -->
 <div class="header">
-  <h1>📅  Миш - Мич събития</h1>
+  <h1>📅 Миш-Мич събития</h1>
 </div>
 
-<!-- TOP -->
 <div class="top-section">
 
-  <!-- FEATURED -->
   <div class="featured" id="featured">
     <div class="tag">Следващо събитие</div>
     <h2>Няма зададено събитие</h2>
   </div>
 
-  <!-- CALENDAR -->
   <div class="calendar">
+    <div class="calendar-month" id="calMonth"></div>
     <div class="weekdays">
       <div>Пн</div><div>Вт</div><div>Ср</div>
       <div>Чт</div><div>Пт</div><div>Сб</div><div>Нд</div>
@@ -238,86 +391,105 @@ nav a:hover::after{
 
 </div>
 
-<!-- EVENTS -->
-<div class="events" id="eventsList"></div>
+<div class="events">
+  <h2>Всички събития</h2>
+  <div id="eventsList"></div>
+</div>
+
+<footer>Mish-Mich © 2026</footer>
 
 <script>
+const hamburger = document.getElementById("hamburger");
+const navLinks  = document.getElementById("navLinks");
 
-/* ================= FEATURED ================= */
-function loadFeatured(){
-  const ev = JSON.parse(localStorage.getItem("featuredEvent"));
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("open");
+  navLinks.classList.toggle("open");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("open");
+    navLinks.classList.remove("open");
+  });
+});
+
+function loadFeatured() {
+  const ev  = JSON.parse(localStorage.getItem("featuredEvent"));
   const box = document.getElementById("featured");
 
-  if(!ev){
-    box.innerHTML = `<div class="tag">Следващо събитие</div>
-    <h2>Няма зададено събитие</h2>`;
+  if (!ev) {
+    box.innerHTML = `<div class="tag">Следващо събитие</div><h2>Няма зададено събитие</h2>`;
     return;
   }
 
-  const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&dates=&details=${encodeURIComponent(ev.desc || "")}&location=${encodeURIComponent(ev.place || "")}`;
+  const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&details=${encodeURIComponent(ev.desc || "")}&location=${encodeURIComponent(ev.place || "")}`;
 
   box.innerHTML = `
     <div class="tag">Следващо събитие</div>
+    ${ev.image ? `<img src="${ev.image}" alt="${ev.title}">` : ""}
     <h2>${ev.title}</h2>
     <p>📅 ${ev.date} | ${ev.time}</p>
     <p>📍 ${ev.place}</p>
-
-    ${ev.image ? `<img src="${ev.image}">` : ""}
-
-    <a class="btn" target="_blank" href="${googleLink}">
-      ➕ Google Calendar
-    </a>
+    ${ev.desc ? `<p>${ev.desc}</p>` : ""}
+    <a class="btn" target="_blank" href="${googleLink}">➕ Google Calendar</a>
   `;
 }
 
-/* ================= EVENTS ================= */
-function loadEvents(){
-  const events = JSON.parse(localStorage.getItem("events")) || [];
+function loadEvents() {
+  const events    = JSON.parse(localStorage.getItem("events")) || [];
   const container = document.getElementById("eventsList");
 
-  container.innerHTML = "";
+  if (!events.length) {
+    container.innerHTML = `<p style="opacity:0.6">Няма предстоящи събития.</p>`;
+    return;
+  }
 
-  events.forEach(ev=>{
-    container.innerHTML += `
-      <div class="event-card">
-        <h3>${ev.title}</h3>
-        <p>📅 ${ev.date} | ${ev.time}</p>
-        <p>📍 ${ev.place}</p>
-        <p>${ev.desc}</p>
-      </div>
-    `;
-  });
+  container.innerHTML = events.map(ev => `
+    <div class="event-card">
+      <h3>${ev.title}</h3>
+      <p>📅 ${ev.date} | ${ev.time}</p>
+      <p>📍 ${ev.place}</p>
+      ${ev.desc ? `<p>${ev.desc}</p>` : ""}
+    </div>
+  `).join("");
 }
 
-/* ================= CALENDAR ================= */
-function getDayNumber(dateStr){
-  // очаква "20 Март"
-  const parts = dateStr.split(" ");
-  return parseInt(parts[0]);
+function getDayNumber(dateStr) {
+  return parseInt((dateStr || "").split(" ")[0]);
 }
 
-function loadCalendar(){
-  const events = JSON.parse(localStorage.getItem("events")) || [];
+function loadCalendar() {
+  const events   = JSON.parse(localStorage.getItem("events")) || [];
   const featured = JSON.parse(localStorage.getItem("featuredEvent"));
+  const cal      = document.getElementById("calendar");
+  const calYear  = 2026;
+  const calMonth = 5; 
 
-  const cal = document.getElementById("calendar");
+  document.getElementById("calMonth").innerText = "Юни 2026";
+
+  const firstDay    = new Date(calYear, calMonth, 1).getDay();
+  const offset      = (firstDay === 0) ? 6 : firstDay - 1;
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 
   cal.innerHTML = "";
 
-  for(let i=1;i<=30;i++){
+  for (let i = 0; i < offset; i++) {
+    const empty = document.createElement("div");
+    empty.className = "day empty";
+    cal.appendChild(empty);
+  }
+
+  for (let i = 1; i <= daysInMonth; i++) {
     const d = document.createElement("div");
     d.className = "day";
     d.innerText = i;
 
-    // нормални събития
-    events.forEach(ev=>{
-      if(getDayNumber(ev.date) === i){
-        d.classList.add("event");
-      }
+    events.forEach(ev => {
+      if (getDayNumber(ev.date) === i) d.classList.add("event");
     });
 
-    // featured събитие — използва featured-day вместо featured
-    if(featured && getDayNumber(featured.date) === i){
+    if (featured && getDayNumber(featured.date) === i) {
       d.classList.add("featured-day");
     }
 
@@ -325,12 +497,9 @@ function loadCalendar(){
   }
 }
 
-/* INIT */
 loadFeatured();
 loadEvents();
 loadCalendar();
-
 </script>
-
 </body>
 </html>
